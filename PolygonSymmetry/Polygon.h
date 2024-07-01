@@ -1,6 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <stdexcept>
+#include <algorithm>
+
+class Axis;
 
 class Point
 {
@@ -9,13 +13,19 @@ private:
 	float _y;
 
 public:
-	Point(float x, float y);
+	Point() = default;
 
-	Point Reflect(const Axis& axis);
+	Point(float x, float y)
+		: _x(x), _y(y) {};
 
-	float getX();
+	Point GetReflectedPoint(const Axis& axis) const;
 
-	float getY();
+	float GetX() const;
+
+	float GetY() const;
+
+	static Point GetMiddlePoint(const Point& first,
+		const Point& second);
 };
 
 
@@ -26,11 +36,14 @@ private:
 	Point _second;
 
 public:
-	Axis(const Point& first, const Point& second);
+	Axis() = default;
 
-	Point getFirst();
+	Axis(const Point& first, const Point& second)
+		: _first(first), _second(second) {};
 
-	Point getSecond();
+	const Point& getFirst() const;
+
+	const Point& getSecond() const;
 };
 
 
@@ -39,10 +52,13 @@ class Polygon
 private:
 	std::vector<Point> _vertices;
 
-	bool IsSymmetryAxis(const Axis& axis);
+	int _size;
+
+	bool IsSymmetryAxis(const Axis& axis) const;
 
 public:
-	Polygon(const std::vector<Point>& vertices);
-	
-	std::vector<Axis> FindAxesOfSymmetry();
+	Polygon(const std::vector<Point>& vertices)
+		: _vertices(vertices), _size(vertices.size()) {};
+
+	std::vector<Axis> FindAxesOfSymmetry() const;
 };
