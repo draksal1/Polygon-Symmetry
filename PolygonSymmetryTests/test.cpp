@@ -38,6 +38,16 @@ TEST(PointTest, GetReflectedPointParallelAxisTest) {
 
 }
 
+TEST(PointTest, GetReflectedPointThrowTest) {
+
+	Point point = Point(1.0f, 0.5f);
+
+	Axis axis = Axis(Point(0.0f, 0.0f), Point(0.0f, 0.0f));
+
+	EXPECT_THROW(point.GetReflectedPoint(axis), std::invalid_argument);
+
+}
+
 TEST(PointTest, GetReflectedPointRegularAxisTest) {
 
 	Point point = Point(1.0f, 0.0f);
@@ -50,7 +60,6 @@ TEST(PointTest, GetReflectedPointRegularAxisTest) {
 }
 
 TEST(AxisTest, ConstructorTest) {
-
 	Axis axis = Axis(Point(0.0f, 0.0f), Point(1.0f, 1.0f));
 	EXPECT_EQ(axis.getFirst(), Point(0.0f, 0.0f));
 	EXPECT_EQ(axis.getSecond(), Point(1.0f, 1.0f));
@@ -99,8 +108,7 @@ TEST(PolygonTest, FindSymmetryAxesSquareTest) {
 }
 
 TEST(PolygonTest, FindSymmetryAxesRombTest) {
-	std::vector<Point> points = std::vector<Point>(
-		{
+	std::vector<Point> points = std::vector<Point>({
 			Point(0.0f, 0.0f), Point(2.0f, 1.0f),
 			Point(0.0f, 3.0f), Point(-2.0f, 1.0f),
 		});
@@ -118,8 +126,7 @@ TEST(PolygonTest, FindSymmetryAxesRombTest) {
 
 
 TEST(PolygonTest, FindSymmetryAxesFiveTest) {
-	std::vector<Point> points = std::vector<Point>(
-		{
+	std::vector<Point> points = std::vector<Point>({
 			Point(0.0f, 1.0f), Point(1.0f, 0.0f),
 			Point(2.0f, 0.0f), Point(3.0f, 1.0f),
 			Point(1.5f, 2.0f)
@@ -136,8 +143,7 @@ TEST(PolygonTest, FindSymmetryAxesFiveTest) {
 
 
 TEST(PolygonTest, FindSymmetryAxesNonSymmetricTest) {
-	std::vector<Point> points = std::vector<Point>(
-		{
+	std::vector<Point> points = std::vector<Point>({
 			Point(0.1f, 1.0f), Point(-1.0f, 0.0f),
 			Point(0.0f, -1.0f), Point(1.0f, -0.5f),
 			Point(2.0f, 1.0f)
@@ -149,4 +155,17 @@ TEST(PolygonTest, FindSymmetryAxesNonSymmetricTest) {
 	std::vector<Axis> result = polygon.FindAxesOfSymmetry();
 
 	EXPECT_EQ(result, std::vector<Axis>());
+}
+
+TEST(PolygonTest, FindSymmetryAxesThrowTest) {
+	std::vector<Point> points = std::vector<Point>({
+			Point(0.0f, 1.0f), Point(0.0f, 1.0f),
+			Point(2.0f, 0.0f), Point(3.0f, 1.0f),
+			Point(1.5f, 2.0f)
+		});
+
+
+	Polygon polygon = Polygon(points);
+
+	EXPECT_THROW(std::vector<Axis> result = polygon.FindAxesOfSymmetry(), std::invalid_argument);
 }
