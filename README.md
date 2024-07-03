@@ -12,3 +12,11 @@ the polygon is non-symmetric.
 
 <h3>Algorithm:</h3>
 
+We go through all the vertices of the polygon and the points midway between neighbouring points, and for each check all the points and halves on the polygon as shown in the picture:
+
+![](/Pictures/Pentagon.png)
+
+For each obtained line we check whether this line is a symmetry axis for the given polygon. For this purpose, we create a new list of vertices, where we put the reflected vertices of the original polygon. Then we sorit both arrays and check for equality.
+
+To reflect the point, we applied the deduced formulas for the projection of a point onto a line. 
+
