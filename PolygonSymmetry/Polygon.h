@@ -26,6 +26,8 @@ public:
 
 	static Point GetMiddlePoint(const Point& first,
 		const Point& second);
+
+	bool operator==(const Point& other) const;
 };
 
 
@@ -44,6 +46,8 @@ public:
 	const Point& getFirst() const;
 
 	const Point& getSecond() const;
+
+	bool operator==(const Axis& other) const;
 };
 
 
@@ -52,7 +56,7 @@ class Polygon
 private:
 	std::vector<Point> _vertices;
 
-	int _size;
+	size_t _size;
 
 	bool IsSymmetryAxis(const Axis& axis) const;
 
@@ -61,4 +65,6 @@ public:
 		: _vertices(vertices), _size(vertices.size()) {};
 
 	std::vector<Axis> FindAxesOfSymmetry() const;
+
+	size_t GetSize();
 };

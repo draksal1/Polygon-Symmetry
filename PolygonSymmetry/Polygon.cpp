@@ -5,7 +5,7 @@ float Point::GetX() const{
 }
 
 float Point::GetY() const{
-	return _x;
+	return _y;
 }
 
 
@@ -21,47 +21,33 @@ Point Point::GetMiddlePoint(const Point& first,
 	const Point& second)
 {
 	{
-		return Point(first._x + (second._x - first._x) / 2,
-			(second._y - first._y) / 2);
+		return Point(first._x + (second._x - first._x) / 2.0f,
+			first._y + (second._y - first._y) / 2.0f);
 	}
 }
 
 Point Point::GetReflectedPoint(const Axis& axis) const
 {
-	// ѕолучаем координаты первой и второй точек оси
 	float x1 = axis.getFirst().GetX();
 	float y1 = axis.getFirst().GetY();
 	float x2 = axis.getSecond().GetX();
 	float y2 = axis.getSecond().GetY();
 
-	// ¬ычисл€ем угол наклона пр€мой
 	float dx = x2 - x1;
 	float dy = y2 - y1;
-	float angle = atan2(dy, dx);
 
-	// ѕеремещаем точку и ось так, чтобы перва€ точка оси была в начале координат
-	float translated_x = _x - x1;
-	float translated_y = _y - y1;
+	float a = (dx * dx - dy * dy) / (dx * dx + dy * dy);
+	float b = 2 * dx * dy / (dx * dx + dy * dy);
 
-	// ѕоворачиваем точку на -angle, чтобы ось совпала с осью x
-	float cos_angle = cos(-angle);
-	float sin_angle = sin(-angle);
-	float rotated_x = translated_x * cos_angle - translated_y * sin_angle;
-	float rotated_y = translated_x * sin_angle + translated_y * cos_angle;
+	float x = a * (_x - x1) + b * (_y - y1) + x1;
+	float y = b * (_x - x1) - a * (_y - y1) + y1;
 
-	// ќтражаем точку относительно оси x
-	float reflected_x = rotated_x;
-	float reflected_y = -rotated_y;
+	return Point(x, y);
+}
 
-	// ѕоворачиваем точку обратно на angle
-	float final_x = reflected_x * cos(angle) - reflected_y * sin(angle);
-	float final_y = reflected_x * sin(angle) + reflected_y * cos(angle);
-
-	// ѕеремещаем точку обратно
-	final_x += x1;
-	final_y += y1;
-
-	return Point(final_x, final_y);
+bool Point::operator==(const Point& other) const
+{
+	return _x == other._x && _y == other._y;
 }
 
 
@@ -108,6 +94,11 @@ std::vector<Axis> Polygon::FindAxesOfSymmetry() const
 	return result;
 }
 
+bool Axis::operator==(const Axis& other) const
+{
+	return (_first == other._first) && (_second == other._second);
+}
+
 bool Polygon::IsSymmetryAxis(const Axis& axis) const
 {
 	std::vector<Point> reflectedVertices;
@@ -123,3 +114,6 @@ bool Polygon::IsSymmetryAxis(const Axis& axis) const
 	std::sort(sortedVertices.begin(), sortedVertices.end(), comp);
 	return reflectedVertices == sortedVertices;
 }
+
+size_t Polygon::GetSize() {
+	return _size;}

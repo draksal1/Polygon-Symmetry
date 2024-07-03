@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PolygonSymmetry", "PolygonSymmetry.vcxproj", "{B5E88C1C-6BF9-4A68-B2CF-B497C031E756}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PolygonSymmetryTests", "..\PolygonSymmetryTests\PolygonSymmetryTests.vcxproj", "{2CCC22ED-0E38-469C-828A-594BC5B9DC89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{B5E88C1C-6BF9-4A68-B2CF-B497C031E756}.Release|x64.Build.0 = Release|x64
 		{B5E88C1C-6BF9-4A68-B2CF-B497C031E756}.Release|x86.ActiveCfg = Release|Win32
 		{B5E88C1C-6BF9-4A68-B2CF-B497C031E756}.Release|x86.Build.0 = Release|Win32
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Debug|x64.ActiveCfg = Debug|x64
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Debug|x64.Build.0 = Debug|x64
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Debug|x86.ActiveCfg = Debug|Win32
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Debug|x86.Build.0 = Debug|Win32
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Release|x64.ActiveCfg = Release|x64
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Release|x64.Build.0 = Release|x64
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Release|x86.ActiveCfg = Release|Win32
+		{2CCC22ED-0E38-469C-828A-594BC5B9DC89}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
