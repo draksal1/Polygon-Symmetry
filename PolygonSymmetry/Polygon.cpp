@@ -66,6 +66,10 @@ bool Axis::operator==(const Axis& other) const{
 
 
 std::vector<Axis> Polygon::FindAxesOfSymmetry() const {
+	if (_vertices.size() < 3) {
+		throw std::invalid_argument("Bad polygon");
+	}
+
 	std::vector<Axis> result = std::vector<Axis>();
 
 	Axis temp = Axis();

@@ -164,8 +164,16 @@ TEST(PolygonTest, FindSymmetryAxesThrowTest) {
 			Point(1.5f, 2.0f)
 		});
 
-
 	Polygon polygon = Polygon(points);
 
 	EXPECT_THROW(std::vector<Axis> result = polygon.FindAxesOfSymmetry(), std::invalid_argument);
+
+	points = std::vector<Point>({
+	Point(0.0f, 1.0f), Point(0.0f, 2.0f)
+		});
+
+	polygon = Polygon(points);
+
+	EXPECT_THROW(std::vector<Axis> result = polygon.FindAxesOfSymmetry(), std::invalid_argument);
 }
+
