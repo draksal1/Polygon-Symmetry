@@ -71,8 +71,11 @@ public:
 	Polygon(const std::vector<Point>& vertices)
 		: _vertices(vertices), _size(vertices.size()) {};
 
+	Polygon(std::vector<Point>&& vertices)
+		: _vertices(std::move(vertices)), _size(_vertices.size()) {};
+
 	// Returns the list of axes of symmetry of the polygon.
 	std::vector<Axis> FindAxesOfSymmetry() const;
 
-	size_t GetSize();
+	size_t GetSize() const;
 };

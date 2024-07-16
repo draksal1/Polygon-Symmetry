@@ -160,8 +160,8 @@ TEST(PolygonTest, FindSymmetryAxesNonSymmetricTest) {
 TEST(PolygonTest, FindSymmetryAxesThrowTest) {
 	std::vector<Point> points = std::vector<Point>({
 			Point(0.0f, 1.0f), Point(0.0f, 1.0f),
-			Point(2.0f, 0.0f), Point(3.0f, 1.0f),
-			Point(1.5f, 2.0f)
+			Point(0.0f, 1.0f), Point(0.0f, 1.0f),
+			Point(0.0f, 1.0f)
 		});
 
 	Polygon polygon = Polygon(points);

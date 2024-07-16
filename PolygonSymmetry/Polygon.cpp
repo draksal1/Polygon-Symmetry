@@ -66,6 +66,20 @@ bool Axis::operator==(const Axis& other) const{
 
 
 std::vector<Axis> Polygon::FindAxesOfSymmetry() const {
+
+	/*
+		Here we go through all the points of the polygon and check the axes of symmetry, and then,
+
+		if the number of vertices is even, then we check the axis passing through this point and through me + (_size / 2), 
+		as well as through the middle point between this and the next and the middle point between me + (_size / 2) and the next.
+		This is necessary in order to check only those axes whose number of points on each side is equal.
+
+		If there are an odd number of vertices, then we check the axis passing between this point and the average between I + (_size / 2) and the next, 
+		as well as the axis passing through the middle point between this and the next and the next for me + (_size / 2).
+
+		Read more with illustrations in README.md
+	*/
+
 	if (_vertices.size() < 3) {
 		throw std::invalid_argument("Bad polygon");
 	}
@@ -78,37 +92,57 @@ std::vector<Axis> Polygon::FindAxesOfSymmetry() const {
 	Point pointSecond;
 	Point pointSecondPlusHalf;
 
-	/*
-	Here we go through all the points of the polygon,
-	as well as the points located in the middle between neighboring points,
-	thus we check all possible lines that could be axes of symmetry.
-	*/
+	int j;
 
-	for (int i = 0; i < _size; i++) {
-		for (int j = i + 1; j < _size; j++) {
-			pointFirst = _vertices[i];
-			pointFirstPlusHalf = Point::GetMiddlePoint(pointFirst, _vertices[i + 1]);
-			pointSecond = _vertices[j];
+	for (int i = 0; i < _size - 1; i++) {
 
-			// If next element is last and u need element between next and first
+		j = i + (_size / 2);
+
+		if (j >= _size)
+		{
+			break;
+		}
+
+		pointFirst = _vertices[i];
+		pointFirstPlusHalf = Point::GetMiddlePoint(pointFirst, _vertices[i + 1]);
+
+
+
+		if (_vertices.size() % 2 == 0) {
+			pointSecond = _vertices[i + (_size / 2)];
+
 			if (j == _size - 1) {
 				pointSecondPlusHalf = Point::GetMiddlePoint(pointSecond, _vertices[0]);
 			}
 			else {
 				pointSecondPlusHalf = Point::GetMiddlePoint(pointSecond, _vertices[j + 1]);
 			}
-
-
-			// Check all posible cases with 4 points
-			for (auto& firstIter : { pointFirst, pointFirstPlusHalf }) {
-				for (auto& secondIter : { pointSecond, pointSecondPlusHalf }) {
-					temp = Axis(firstIter, secondIter);
-					if (IsSymmetryAxis(temp)) {
-						result.push_back(temp);
-					}
-				}
+		}
+		else {
+			if (j == _size - 1) {
+				pointSecond = Point::GetMiddlePoint(_vertices[i + (_size / 2)], _vertices[0]);
+				pointSecondPlusHalf = _vertices[0];
+			}
+			else {
+				pointSecond = Point::GetMiddlePoint(_vertices[i + (_size / 2)], _vertices[j + 1]);
+				pointSecondPlusHalf = _vertices[j + 1];
 			}
 		}
+
+
+		temp = Axis(pointFirst, pointSecond);
+
+		if (IsSymmetryAxis(temp)) {
+			result.push_back(temp);
+		}
+
+
+		temp = Axis(pointFirstPlusHalf, pointSecondPlusHalf);
+
+		if (IsSymmetryAxis(temp)) {
+			result.push_back(temp);
+		}
+
 	}
 	return result;
 }
@@ -142,5 +176,5 @@ bool Polygon::IsSymmetryAxis(const Axis& axis) const{
 	return reflectedVertices == sortedVertices;
 }
 
-size_t Polygon::GetSize() {
+size_t Polygon::GetSize() const{
 	return _size;}
